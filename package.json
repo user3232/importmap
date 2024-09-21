@@ -1,0 +1,82 @@
+{
+  "name": "@user3232/importmap",
+  "version": "1.5.2",
+  "description": "importmap's generated from runtime!",
+  "keywords": [
+    "importmap",
+    "node",
+    "package.json",
+    "exports",
+    "imports",
+    "cli",
+    "api"
+  ],
+  "author": "kolodziej.michal %at% gmail.com",
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/user3232/importmap"
+  },
+  "spec": "github:user3232/importmap#semver:1.5.2",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": {
+        "node": "./lib/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#hash": {
+      "import": {
+        "browser": "lib/hash/hash-browser.js",
+        "node": "lib/hash/hash-node.js"
+      }
+    }
+  },
+  "files": [
+    "bin",
+    "lib",
+    "src",
+    "package.json",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "bin": {
+    "importmap": "./bin/importmap.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@types/command-line-args": "^5.2.3",
+    "@types/command-line-usage": "^5.0.4",
+    "@types/node": "^22.4.0",
+    "@types/npm-package-arg": "^6.1.4",
+    "@types/treeverse": "^3.0.5",
+    "@user3232/pattern": "github:user3232/pattern#semver:latest",
+    "@user3232/pipable": "github:user3232/pipable#semver:latest",
+    "command-line-args": "^6.0.0",
+    "command-line-usage": "^7.0.3",
+    "glob": "^11.0.0",
+    "node-html-parser": "^6.1.13",
+    "npm-package-arg": "^11.0.3",
+    "treeverse": "^3.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.1",
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4"
+  },
+  "scripts": {
+    "test": "tsx --test test/*.test.ts",
+    "build-js": "esbuild src/hash/*.ts src/index.ts --bundle --outdir=lib --charset=utf8 --platform=node --format=esm --packages=external --analyze",
+    "build-dts": "tsc -p tsconfig.src.json",
+    "build": "npm run build-dts && npm run build-js",
+    "clean": "rm -rf lib",
+    "rebuild": "npm run clean && npm run build",
+    "dist": "npm run rebuild && npm run test"
+  }
+}
